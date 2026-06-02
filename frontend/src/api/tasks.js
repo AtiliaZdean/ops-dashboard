@@ -10,13 +10,13 @@
  export const getTaskStats = () => api.get('/tasks/stats')
 
  // GET/tasks/:id - fetch one task
- export const getTask = (id) => api.get('/tasks/${id}')
+ export const getTask = (id) => api.get(`/tasks/${id}`)
 
  // POST /tasks - create a new task
  export const createTask = (data) => api.post('/tasks/', data)
 
  // PUT /tasks/:id - update a task
- export const updateTask = (id, data) => api.put('/tasks/${id}', data)
+ export const updateTask = (id, data) => api.put(`/tasks/${id}`, data)
 
  // DELETE /tasks/:id - delete a task
- export const deleteTask = (id) => api.delete('/tasks/${id}')
+ export const deleteTask = (id) => api.delete(`/tasks/${id}`)

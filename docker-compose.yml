@@ -1,0 +1,59 @@
+# defines all the services that make up the app
+# running "docker-compose up" starts everything together
+
+# version: '3.8'
+
+services:
+
+  # -- PostgreSQL Database --
+  db:
+    image: postgres:15
+    container_name: ops_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: ops_dashboard
+    volumes:
+      # persist database data even when container stops
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      # wait for postgres to be ready before starting backend
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # -- fastAPI Backend --
+  backend:
+    build: ./backend
+    container_name: ops_backend
+    environment:
+      DATABASE_URL: postgresql://postgres:admin123@host.docker.internal:5432/ops_dashboard
+      SECRET_KEY: yoursecretkey
+      GROQ_API_KEY: ${GROQ_API_KEY}  # reads from the .env file
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy  # wait for db to be ready
+    volumes:
+      # mount code so changes reflect without rebuild
+      - ./backend:/app
+
+  # -- react frontend --
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:8000
+    container_name: ops_frontend
+    ports:
+      - "3000:80"  # changed to 3000 to avoid XAMPP conflic
+    depends_on:
+      - backend
+
+# -- volumes --
+volumes:
+  postgres_data:  # named volume for database persistence

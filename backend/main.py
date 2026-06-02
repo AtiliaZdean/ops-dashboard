@@ -29,7 +29,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # React dev server default port
+    allow_origins=["http://localhost:5173", "http://localhost:3000"],  # React dev server default port
     allow_credentials=True,
     allow_methods=["*"],    # allow GET, POST, PUT, DELETE etc
     allow_headers=["*"],    # allow all headers
