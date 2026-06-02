@@ -3,7 +3,11 @@
 An AI-powered internal operations dashboard for managing tasks, staff, and business insights.
 Built as a portfolio project to demonstrate full-stack development with modern tools.
 
-![Dashboard Preview](preview.png)
+![Dashboard Preview](preview/Dashboard.png)
+![Tasks Preview](preview/Tasks.png)
+![Users Preview](preview/Users.png)
+![Audit Logs Preview](preview/AuditLogs.png)
+![AI Chat Preview](preview/AIChat.png)
 
 ---
 
