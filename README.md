@@ -154,6 +154,21 @@ ops-dashboard/
 
 ---
 
+## Future Improvements
+
+These are intentionally out of scope for this portfolio project but would be required for a production deployment:
+
+- **Authentication & Authorization** — JWT-based login system with role-based access control (managers vs workers see different views)
+- **Advanced AI** — upgrade to a larger model, add conversation memory, and support more complex analytical queries like trend detection across time periods
+- **Real-time Updates** — WebSocket integration so the dashboard refreshes live without manual page reload
+- **Data Export** — export tasks and audit logs to CSV or PDF for reporting
+- **Unit & Integration Tests** — pytest for backend endpoints, React Testing Library for frontend components
+- **CI/CD Pipeline** — GitHub Actions workflow to run tests and auto-deploy on every push
+- **Rate Limiting** — protect the AI chat endpoint from abuse
+- **Pagination** — handle large datasets properly instead of fetching all records at once
+
+---
+
 ## Author
 
 **Atilia Zainuddin**
