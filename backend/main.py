@@ -1,4 +1,3 @@
- # main.py
 # This is the entry point of our FastAPI backend
 # Every API route (endpoint) will be registered here
 
@@ -10,7 +9,7 @@ from database import engine, Base
 import models  # noqa: F401 - needed so SQLAlchemy sees all models before creating tables
 
 # Import routers - each file handles a different feature
-from routers import users, tasks, audit
+from routers import users, tasks, audit, chat
 
 # ─────────────────────────────────────────
 # CREATE FASTAPI APP
@@ -47,6 +46,7 @@ app.add_middleware(
 app.include_router(users.router)
 app.include_router(tasks.router)
 app.include_router(audit.router)
+app.include_router(chat.router)
 
 @app.on_event("startup")
 def create_tables():

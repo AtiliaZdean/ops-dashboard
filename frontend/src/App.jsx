@@ -5,6 +5,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Sidebar from './components/Sidebar'
 import Topbar from './components/Topbar'
 
+import Dashboard from './pages/Dashboard'
+import Users from './pages/Users'
+import Tasks from './pages/Tasks'
+import AuditLogs from './pages/AuditLogs'
+import AIChat from './pages/AIChat'
+
 function App() {
   return (
     <BrowserRouter>
@@ -16,12 +22,16 @@ function App() {
         {/* topbar & content */}
         <div className = "flex-1 flex flex-col">
 
-          <Topbar title = "Dashboard"/>
+          <Topbar title = "Overview"/>
 
           {/* page content */}
           <main className = "flex-1 p-6">
             <Routes>
-              <Route path="/" element={<div className="text-white">Dashboard coming soon!</div>} />
+              <Route path="/" element = {<Dashboard/>}/>
+              <Route path="/users" element = {<Users/>}/>
+              <Route path="/tasks" element = {<Tasks/>}/>
+              <Route path="/audit" element = {<AuditLogs/>}/>
+              <Route path="/chat" element = {<AIChat/>}/>
             </Routes>
           </main>
 

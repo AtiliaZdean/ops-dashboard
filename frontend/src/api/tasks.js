@@ -7,7 +7,7 @@
  export const getTasks = (params) => api.get('/tasks/', { params })
 
  // GET/tasks/stats - fetch dashboard stats
- export const getTasksStats = () => api.get('/tasks/stats')
+ export const getTaskStats = () => api.get('/tasks/stats')
 
  // GET/tasks/:id - fetch one task
  export const getTask = (id) => api.get('/tasks/${id}')
