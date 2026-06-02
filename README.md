@@ -38,19 +38,18 @@ Built as a portfolio project to demonstrate full-stack development with modern t
 ---
 
 ## Architecture
-┌─────────────────┐     HTTP     ┌─────────────────┐     SQL      ┌─────────────────┐
-│  React Frontend │ ──────────── │ FastAPI Backend │ ──────────── │  PostgreSQL DB  │
-│  (port 3000)    │              │  (port 8000)    │              │  (port 5432)    │
-└─────────────────┘              └────────┬────────┘              └─────────────────┘
-│
-│ API call
-▼
-┌─────────────────┐
-│   Groq API      │
-│ (LLaMA 3.1 8B)  │
-└─────────────────┘
 
----
+```
+React Frontend (port 3000)
+        |
+        | HTTP
+        v
+FastAPI Backend (port 8000)
+        |
+        |-- SQL --> PostgreSQL DB (port 5432)
+        |
+        |-- API call --> Groq API (LLaMA 3.1 8B)
+```
 
 ## Getting Started
 
@@ -85,29 +84,14 @@ GROQ_API_KEY=your_groq_api_key_here
 ---
 
 ## Database Schema
-users
-├── id (PK)
-├── name
-├── email (unique)
-├── role
-└── created_at
-tasks
-├── id (PK)
-├── title
-├── description
-├── status (pending | in_progress | completed | overdue)
-├── priority (low | medium | high)
-├── assigned_to (FK → users.id)
-├── due_date
-├── created_at
-└── updated_at
-audit_logs
-├── id (PK)
-├── action
-├── detail
-├── user_id (FK → users.id)
-├── task_id (FK → tasks.id)
-└── timestamp
+
+**users** — id (PK), name, email (unique), role, created_at
+
+**tasks** — id (PK), title, description, status, priority, assigned_to (FK), due_date, created_at, updated_at
+
+**audit_logs** — id (PK), action, detail, user_id (FK), task_id (FK), timestamp
+
+Relationships: one user has many tasks, one task has many audit logs.
 
 ---
 
@@ -131,27 +115,30 @@ audit_logs
 ---
 
 ## Project Structure
+
+```
 ops-dashboard/
-├── backend/
-│   ├── routers/
-│   │   ├── users.py       # User CRUD endpoints
-│   │   ├── tasks.py       # Task CRUD endpoints
-│   │   ├── audit.py       # Audit log endpoints
-│   │   └── chat.py        # AI chat endpoint
-│   ├── database.py        # PostgreSQL connection
-│   ├── models.py          # SQLAlchemy table definitions
-│   ├── main.py            # FastAPI app entry point
-│   ├── requirements.txt
-│   └── Dockerfile
-├── frontend/
-│   ├── src/
-│   │   ├── api/           # Axios API client
-│   │   ├── components/    # Sidebar, Topbar
-│   │   └── pages/         # Dashboard, Tasks, Users, AuditLogs, AIChat
-│   ├── Dockerfile
-│   └── package.json
-├── docker-compose.yml
-└── README.md
+  backend/
+    routers/
+      users.py        - User CRUD endpoints
+      tasks.py        - Task CRUD endpoints
+      audit.py        - Audit log endpoints
+      chat.py         - AI chat endpoint
+    database.py       - PostgreSQL connection
+    models.py         - SQLAlchemy table definitions
+    main.py           - FastAPI app entry point
+    requirements.txt
+    Dockerfile
+  frontend/
+    src/
+      api/            - Axios API client
+      components/     - Sidebar, Topbar
+      pages/          - Dashboard, Tasks, Users, AuditLogs, AIChat
+    Dockerfile
+    package.json
+  docker-compose.yml
+  README.md
+```
 
 ---
 
