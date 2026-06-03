@@ -20,7 +20,7 @@ jobs:
     # spin up a postgresql db for testing
     services:
       postgres:
-        images: postgres:15
+        image: postgres:15
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: admin123
