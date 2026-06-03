@@ -24,7 +24,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: admin123
-          POSTGRES_BD: ops_dashboard
+          POSTGRES_DB: ops_dashboard
         ports:
           - 5432:5432
         # wait for postgres to be ready before running tests
