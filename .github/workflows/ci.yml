@@ -1,0 +1,98 @@
+# this workflow runs automatically on every push to GitHub
+# it checks that the backend installs n starts without errors
+
+name: CI Pipeline
+
+# trigger on every push and pull request to master branch
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+
+  # -- backend tests --
+  backend:
+    name: Backend Health Check
+    runs-on: ubuntu-latest  # github provides a free Linux machine
+
+    # spin up a postgresql db for testing
+    services:
+      postgres:
+        images: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: admin123
+          POSTGRES_BD: ops_dashboard
+        ports:
+          - 5432:5432
+        # wait for postgres to be ready before running tests
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      # step 1 - check out the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # step 2 - set up python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # step 3 - install dependencies
+      - name: Install dependencies
+        working-directory: backend
+        run: pip install -r requirements.txt
+
+      # step 4 - check app start without errors
+      - name: Verify app starts
+        working-directory: backend
+        env:
+          DATABASE_URL: postgresql://postgres:admin123@localhost:5432/ops_dashboard
+          SECRET_KEY: testsecretkey
+          GROQ_API_KEY: dummy_key_for_ci  # just check startup, not AI calls
+        run: |
+          # Start uuvicorn in background
+          uvicorn main:app --host 0.0.0.0 --port 8000 &
+          # Wait 5 seconds for it to start
+          sleep 5
+          # Check the health endpoint returns 200
+          curl -f http://localhost:8000/ || exit 1
+          echo "Backend started successfully!"
+
+  # -- frontend build check --
+  frontend:
+    name: Frontend Build Check
+    runs-on: ubuntu-latest
+
+    steps:
+      # step 1- check out the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # step 2 - set up node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # step 3 - install dependencies
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm install
+
+      # step 4 - build the react app
+      - name: Build frontend
+        working-directory: frontend
+        env:
+          VITE_API_URL: http://localhost:8000
+        run: npm run build
+
+      - name: Build successful
+        run: echo "Frontend built successfully!"
