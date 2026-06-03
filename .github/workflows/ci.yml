@@ -6,9 +6,9 @@ name: CI Pipeline
 # trigger on every push and pull request to master branch
 on:
   push:
-    branches: [master]
+    branches: [ master ]
   pull_request:
-    branches: [master]
+    branches: [ master ]
 
 jobs:
 
@@ -58,7 +58,7 @@ jobs:
           SECRET_KEY: testsecretkey
           GROQ_API_KEY: dummy_key_for_ci  # just check startup, not AI calls
         run: |
-          # Start uuvicorn in background
+          # Start uvicorn in background
           uvicorn main:app --host 0.0.0.0 --port 8000 &
           # Wait 5 seconds for it to start
           sleep 5
