@@ -2,7 +2,6 @@
 ![CI](https://github.com/AtiliaZdean/ops-dashboard/actions/workflows/ci.yml/badge.svg)
 
 An AI-powered internal operations dashboard for managing tasks, staff, and business insights.
-Built as a portfolio project to demonstrate full-stack development with modern tools.
 
 ![Dashboard Preview](preview/Dashboard.png)
 ![Tasks Preview](preview/Tasks.png)
