@@ -1,5 +1,5 @@
 # Ops Dashboard
-![CI](https://github.com/AtiliaZdean/ops-dashboard/actions/workflows/ci.yml/badge.svg)
+[![CI](https://github.com/AtiliaZdean/ops-dashboard/actions/workflows/ci.yml/badge.svg)](https://github.com/AtiliaZdean/ops-dashboard/actions/workflows/ci.yml)
 
 An AI-powered internal operations dashboard for managing tasks, staff, and business insights.
 
